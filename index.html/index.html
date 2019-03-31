@@ -21,8 +21,8 @@
 
     var wins = 0;
     var losses = 0;
-    var guessesLeft = 0;
-    var guessesSoFar = 0;
+    var guessesLeft = 10;
+    var guessesSoFar = [];
 
 
     var directionsText = document.getElementById("directions-text");
@@ -34,23 +34,36 @@
 
     document.onkeyup = function(event) {
         var userGuess = event.key;
+            guessesSoFar.push(userGuess)
+            console.log(guessesSoFar);
+
     
         var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-    
+            console.log(computerGuess);
 
         if (userGuess === computerGuess) {
           wins++;
-        } else {
+        } else { 
           losses++;
+          guessesLeft--;
+        }
+
+
+        // I wasn't able to figure out how to make the game automatically stop counting after the user loses 10x so I made an alert so the user would stop playing on their own
+
+        if (guessesLeft === 0) {
+            alert("You've lost!")
+        } 
+    
+        if (losses === 10) {
+            alert("Game Over!")
         }
 
 
         winsText.textContent = "Wins: " + wins;
         lossesText.textContent = "Losses: " + losses; 
-        guessesSoFarText.textContent = "Your Guesses So Far: " + userGuess; 
-
-
-        guessesLeftText.textContent = "Guesses Left: " ; 
+        guessesSoFarText.textContent = "Your Guesses So Far: " + guessesSoFar; 
+        guessesLeftText.textContent = "Guesses Left: " + guessesLeft; 
 
 
 
